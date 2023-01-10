@@ -1,0 +1,142 @@
+﻿@page
+@model UIAssignmentRazorPages.Pages.sramji2StudentModel
+@{
+}
+<script type="text/javascript">
+    function isValidForm()
+    {
+        var isValid = true;
+        var mailformat = /^\w+([\.-]?\w+)*@@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        var userIDformat = /^[a-zA-Z]{4}[0-9]{4}$/;        
+        var pw1 = document.getElementById('password').value;
+        var pw2 = document.getElementById('confirmPassword').value;
+        
+
+        if (FirstName.value.length == 0) {
+            isValid = false;
+            document.getElementById('FirstNameError').innerText = "First Name is required"
+        } else if (FirstName.value.length < 2) {
+            isValid = false;
+            document.getElementById('FirstNameError').innerText = "First Name must contain at least 2 characters"
+        }
+         else {
+            isValid = true;
+            document.getElementById("FirstNameError").innerHTML = "";
+        }
+        if (LastName.value.length == 0) {
+            isValid = false;
+            document.getElementById('LastNameError').innerText = "Last Name is required"
+        } else if (LastName.value.length < 2) {
+            isValid = false;
+            document.getElementById('LastNameError').innerText = "Last Name must contain at least 2 characters"
+        }
+        else {
+            isValid = true;
+            document.getElementById("LastNameError").innerHTML = "";
+        }
+
+        if (Email.value.length == 0) {
+            isValid = false;
+            document.getElementById('EmailError').innerText = "Email is required"
+        }
+        else if (!Email.value.match(mailformat)) {
+            isValid = false;
+            document.getElementById('EmailError').innerText = "Email needs to be in the proper format name@nait.ca"
+        }
+        else {
+            isValid = true;
+            document.getElementById('EmailError').innerHTML = "";
+        }
+        if (UserID.value.length == 0) {
+            isValid = false;
+            document.getElementById('UserIDError').innerText = "User ID is required"
+        }
+        else if (!UserID.value.match(userIDformat)) {
+            isValid = false;
+            document.getElementById('UserIDError').innerText = "User ID must start with 4 characters followed by 4 numbers"
+        }
+        else {
+            isValid = true;
+            document.getElementById("UserIDError").innerHTML = "";
+        }
+        
+        if (pw1 == 0) {
+            isValid = false;
+            document.getElementById('PasswordError').innerText = "Password is required"
+        }
+        else if (pw1 <= 6) {
+            isValid = false;
+            document.getElementById('PasswordError').innerText = "Password must be 6 characters long"
+        }
+        else {
+            isValid = true;
+            document.getElementById("PasswordError").innerHTML = "";
+        }
+        if (pw2 == 0) {
+            isValid = false;
+            document.getElementById('ConfirmPasswordError').innerText = "Confirm Password is required"
+        }
+        else if (pw2 != pw1) {
+           
+            isValid = false;
+            document.getElementById('ConfirmPasswordError').innerText = "Confirm Password does not match"
+        }
+        
+        else {
+            isValid = true;
+            document.getElementById("ConfirmPasswordError").innerHTML = "";
+        }
+        return isValid;
+
+    }
+
+</script>
+
+
+@Model.Message
+<h1>New Student</h1>
+
+
+<form method="post" onsubmit="return isValidForm()">
+    <div class="form-group">
+        <label asp-for="FirstName">First Name:</label>
+        <input asp-for="FirstName" class="form-control" />
+        <span id="FirstNameError" class="text-danger" />
+    </div>
+    <div class="form-group">
+        <label asp-for="LastName">Last Name:</label>
+        <input asp-for="LastName" class="form-control" />
+        <span id="LastNameError" class="text-danger" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Email">Email:</label>
+        <input asp-for="Email" class="form-control"  />
+        <span id="EmailError" class="text-danger" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Program">Program:</label>
+        <select asp-for="Program" asp-items="Model.Programs" class="form-control">
+        </select>
+        <span id="ProgramError" class="text-danger" />
+    </div>
+    <div class="form-group">
+        <label asp-for="UserID">User ID:</label>
+        <input asp-for="UserID" class="form-control" />
+        <span id="UserIDError" class="text-danger" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Password">Password</label>
+        <input asp-for="Password" id="password" class="form-control"  />
+        <span id="PasswordError" class="text-danger" />
+    </div>
+    <div class="form-group">
+        <label asp-for="ConfirmPassword">Confirm Password</label>
+        <input asp-for="ConfirmPassword" id ="confirmPassword" class="form-control" />
+        <span id="ConfirmPasswordError" class="text-danger" />
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Submit" class="btn btn-primary" />
+    </div>
+
+</form>
